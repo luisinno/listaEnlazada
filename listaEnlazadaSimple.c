@@ -258,7 +258,7 @@ crearListaValoresAleatorios(ListaEnlazadaRef raiz, int numNodos)
 	return -1;
 }
 
-//EJ PRACT 13
+//EJ PRACT 13_________________________________________________________________________________
 
 
 int main (void) {
@@ -376,15 +376,43 @@ else{
    1.- Ante cada inserción, siempre recorremos la lista desde el principio hasta localizar el último nodo. Es poco eficiente
    2.- Recorremos la lista la primera vez para localizar el ultimo nodo, y a partir de ahí, mantenemos un puntero al último nodo de forma que así hacemos más eficientes las inserciones
 
-5) Crear un bucle que elimine todos los nodos de la lista
 
 
+5) Crear un bucle que elimine todos los nodos de la lista (dejar la lista vacia)*/
 
+
+//para lista vacía: OK
+aborrar = lst; //apuntar al primer nodo
+while (lst != NULL){
+	lst = lst->sig; //1 apuntar al siguiente
+	free(aborrar); //2 liberar
+	aborrar = lst; //3
+}
+// 1 2 3 o 3 1 2 
+/*
+OTRA OPCIÓN: indice apunta a todos los elementos, aborrar va por detras de el liberando todos los nodos. 
+
+indice = lst;
+whule(indice != NULL){
+	aborrar = indice;
+	indice = indice->sig
+	free(aborrar);
+}
+	lst = NULL; // no se modifica el valor del puntero de la lista, por eso igualamos al final a NULL
+*/
+
+/*
 6) Eliminar el primer nodo de la lista
+
+
 
 7) Eliminar el ultimo nodo de la lista
 
-8) Insertar un nodo en orden en una lista enlazada
+
+
+8) Insertar un nodo en orden en una lista enlazada MAS COMPLEJO: 4 ramas
+
+
 
 9) Eliminar un nodo de la lista por su contenido
 
