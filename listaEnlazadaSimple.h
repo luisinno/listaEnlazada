@@ -60,7 +60,98 @@ int insertarOrdenada(ListaEnlazadaRef raiz, tipoInfoRef info);
 
 //-------------------------------------------------------------------------------------
 // EJEMPLOS DE LISTAS ENLAZADAS
+#include <stdio.h>
+#include <stdlib.h>
 
+// *** ---------------------------
+// *** Definicion del tipo nodo
+// *** ---------------------------
+
+
+
+
+
+int main (void) {
+
+// *** -----------------------------------
+// *** 1) Crear una lista enlazada vac�a
+// *** ----------------------------------
+
+   
+
+
+
+// *** -----------------------------------
+// *** 2) Crear un bucle que vaya leyendo n�meros hasta que se teclee 0 o negativo 
+// ***   (bucle controlado por centinela). Por cada n�mero le�do debe de crear un nodo
+// ***   y enlazarlo como PRIMERO a la lista enlazada.
+// *** ----------------------------------
+   
+
+
+
+
+
+// *** -----------------------------------
+// *** 3) Crear un bucle para que recorra la lista, la visualice, 
+// ***    cuente sus nodos y obtenga la suma del valor de todos los nodos
+// ***    Imprimir el n�mero de nodos y su suma en pantalla
+// *** ----------------------------------
+
+   
+
+
+
+// *** -----------------------------------
+// *** 4) Crear un bucle que vaya leyendo n�meros hasta que se teclee 0 o negativo
+// ***    (bucle controlado por centinela). Por cada n�mero le�do debe de crear un nodo y enlazarlo 
+// ***    como ULTIMO a la lista enlazada.
+// *** ----------------------------------
+// *** ----------------------------------------------------
+// --- 4.1 Versi�n 1 del Algoritmo. Ante cada inserci�n, siempre recorremos la lista
+// --- desde el principio hasta localizar el ultimo nodo. Es poco eficiente
+// *** ----------------------------------------------------
+   
+
+
+
+
+
+// *** -----------------------------------
+// *** Bucle para recorrer la lista para visualizarla
+// *** Similar al creado en el punto 3)
+// *** ----------------------------------
+
+/*
+
+1) Crear una lista enlazada vacía (definir la variable correspondiente)
+
+2) Crear un bucle que vaya leyendo números hasta que se teclee uno 0 o negativo (bucle controlado por centinela). Por cada número leído debe de crearse un nodo y enlazarlo como primero a la lista enlazada
+
+3) Crear un bucle para que recorra la lista, la visualice, cuente sus nodos y obtenga la suma del valor de todos los nodos
+
+4) Crear un bucle que vaya leyendo números hasta que se teclee uno 0 o negativo (bucle controlado por centinela). Por cada número leído debe de crear un nodo y enlazarlo como ultimo a la lista enlazada. Se deben escribir dos versiones de este algoritmo
+   1.- Ante cada inserción, siempre recorremos la lista desde el principio hasta localizar el último nodo. Es poco eficiente
+   2.- Recorremos la lista la primera vez para localizar el ultimo nodo, y a partir de ahí, mantenemos un puntero al último nodo de forma que así hacemos más eficientes las inserciones
+
+5) Crear un bucle que elimine todos los nodos de la lista
+
+6) Eliminar el primer nodo de la lista
+
+7) Eliminar el ultimo nodo de la lista
+
+8) Insertar un nodo en orden en una lista enlazada
+
+9) Eliminar un nodo de la lista por su contenido
+
+10) Devolver la información de un nodo de la lista identificado por su posición
+
+11) Eliminar un nodo de la lista identificado por su posición
+
+12) Insertar un nodo en la lista, en una posición indicada
+
+
+*/
 
 #include <stdio.h>
 #include <stdlib.h>
