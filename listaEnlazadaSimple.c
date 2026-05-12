@@ -401,19 +401,81 @@ whule(indice != NULL){
 	lst = NULL; // no se modifica el valor del puntero de la lista, por eso igualamos al final a NULL
 */
 
+
+//6) Eliminar el primer nodo de la lista
+
+//también es válido si solo tiene 1 nodo o si está vacia
+
+if (lst != NULL){
+	aborrar = lst;
+	lst = lst->sig;
+	free(aborrar);
+}
+
+//7) Eliminar el ultimo nodo de la lista
+
+if (lst != NULL){
+	ultimo = lst;
+	anterior = NULL;
+while (ultimo->sig != NULL){
+	anterior = ultimo;
+	ultimo = ultimo->sig;
+	}
+if (anterior == NULL) {
+	free (lst);
+	lst = NULL;//resolvemos si solo hay un nodo 
+	} else{
+	free(ultimo);
+	anterior->sig = NULL; // error si solo hay un nodo
+	}
+}
+//ROBUSTEZ (vacia ok), si solo hay uno 
+
+
+
+
+
+
+
+//8) Insertar un nodo en orden en una lista enlazada MAS COMPLEJO: 4 ramas
+
+
+//si la lista está vacía, el nodo que acabo de crear es el primero
+if (lst == NULL) {
+	lst = nuevo;
+}
+
+// en otro caso, recorremos la lista con DOS PUNTEROS, que apunten a los nodos entre los que inserto el nuevo
+else { //lista no vacía
+	indice = lst;
+	anterior = NULL;
+	while ( (indice->info < nuevo->info)&& (indice->sig != NULL)){
+		anterior = int indice;
+		indice = indice->sig;
+	} //hemos encontrado los nodos a los que apuntaremos entre los que metemos el nuevo
+//resolver ERROR 1
+//el nodo se inserta como primero
+	if (anterior == NULL) {
+	nuevo->sig = lst;
+	lst = nuevo;
+}
+//resolver error 2
+else if ((indice->sig==NULL)&&(indice->info < nuevo->info)){
+//el nodo se inserta al final 
+	nuevo->sig = NULL;
+	indice->sig= nuevo;
+}
+
+else { //el nodo se inserta en medio de la lista
+		nuevo->sig= indice; //ERROR 2; (si apunta al último, lo esta apuntando delante, y lo quiero detras)
+		anterior->sig= nuevo; //ERROR 1 (si apunta al primero)
+
+}
+
+
+
+
 /*
-6) Eliminar el primer nodo de la lista
-
-
-
-7) Eliminar el ultimo nodo de la lista
-
-
-
-8) Insertar un nodo en orden en una lista enlazada MAS COMPLEJO: 4 ramas
-
-
-
 9) Eliminar un nodo de la lista por su contenido
 
 10) Devolver la información de un nodo de la lista identificado por su posición
