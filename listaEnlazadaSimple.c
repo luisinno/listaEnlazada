@@ -796,226 +796,13 @@ else { //el nodo se inserta en medio de la lista
 
 
 //-------------------------------------------------------------------------------------
-// EJEMPLOS DE LISTAS ENLAZADAS
+// EJEMPLOS DE LISTAS ENLAZADAS: EJ
  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// ---------------------------------
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+// DEFINIR STRUCT: NODO
 
 struct _agenda {
 	char nombre[20];
@@ -1024,6 +811,9 @@ struct _agenda {
 };
 
  
+// MOSTRAR MENU 
+
+
 void mostrar_menu()
  {
 	fflush(stdout);
@@ -1088,7 +878,7 @@ void anadir_elemento(struct _agenda **primero)
     }
 }
 
-
+// ELIMINAR LISTA
 
 void eliminar_lista(struct _agenda **primero, char *nombre) 
 {
@@ -1141,6 +931,8 @@ void eliminar_lista(struct _agenda **primero, char *nombre)
 
 }
 
+
+// MOSTRAR LISTA
  
 void mostrar_lista(struct _agenda *primero) 
 {
