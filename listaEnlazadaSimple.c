@@ -409,7 +409,640 @@ crearListaValoresAleatorios(ListaEnlazadaRef raiz, int numNodos)
 
 
 
+// RESUELTO. 
 
+
+
+//
+//  listaEnlazadaSimple.c
+//  listaEnlazadaSimple
+
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include "listaEnlazadaSimple.h"
+
+/*
+ * Crea una lista vacia
+ */
+int
+crearVacia(ListaEnlazadaRef raiz)
+{
+	*raiz = NULL;
+
+	return 0;
+}
+
+/*
+ * Determina si una lista esta vacia
+ */
+int
+estaVacia(ListaEnlazada raiz)
+{
+	return (raiz == NULL);
+}
+
+/*
+ * Crea un nodo
+ */
+tipoNodoRef
+creaNodo(tipoInfoRef info)
+{
+	tipoNodoRef nuevo;
+
+	if((nuevo = malloc(1*sizeof(tipoNodoRef))) == NULL)
+		return NULL;
+
+	nuevo->info = *info;
+	nuevo->sig = NULL;
+
+	return nuevo;
+}
+
+/*
+ * Inserta un nodo despues de otro dada su posicion
+ */
+int
+insertarDespuesDeNodo(ListaEnlazadaRef raiz, tipoNodoRef pos, tipoInfoRef info)
+{
+	tipoNodoRef nuevo, indice, anterior;
+
+	if((nuevo = creaNodo(info)) == NULL)
+		return -1;
+
+	if(estaVacia(*raiz))
+		*raiz = nuevo;
+	else
+	{
+		indice = *raiz;
+		anterior = NULL;
+		while(indice != NULL && indice != pos)
+		{
+			anterior = indice;
+			indice = indice->sig;
+		}
+
+		if(indice != NULL && pos != NULL)
+		{
+			nuevo->sig = pos->sig;
+			pos->sig = nuevo;
+		}
+		else if(pos == NULL)
+				anterior->sig = nuevo;
+			else
+			{
+				free(nuevo);
+				return -2;
+			}
+
+		return 0;
+	}
+}
+
+/*
+ * Inserta un nodo antes de otro dada su posicion
+ */
+int
+insertarAntesDeNodo(ListaEnlazadaRef raiz, tipoNodoRef pos, tipoInfoRef info)
+{
+	tipoNodoRef nuevo, anterior;
+
+	if((nuevo = creaNodo(info)) == NULL)
+		return -1;
+
+	if((estaVacia(*raiz)) || (pos == NULL) || (pos == *raiz))
+	{
+		nuevo->sig = *raiz;
+		*raiz = nuevo;
+	}
+	else
+	{
+		anterior = *raiz;
+		while((anterior != NULL) && (anterior->sig != pos))
+			anterior = anterior->sig;
+		if(anterior != NULL)
+		{
+			nuevo->sig = pos;
+			anterior->sig = nuevo;
+		}
+		else
+		{
+			free(nuevo);
+			return -2;
+		}
+
+		return 0;
+	}
+}
+
+/*
+ * Inserta un nodo al comienzo de una lista
+ */
+int
+insertarNodoComienzo(ListaEnlazadaRef raiz, tipoInfoRef info)
+{
+
+	tipoNodoRef nuevo;
+
+	if((nuevo = creaNodo(info)) == NULL)
+		return -1;
+
+	nuevo->sig = *raiz;
+	*raiz = nuevo;
+
+	return 0;
+}
+
+/*
+ * Inserta un nodo al final de una lista
+ */
+int
+insertarNodoFinal(ListaEnlazadaRef raiz, tipoInfoRef info)
+{
+	tipoNodoRef nuevo, indice;
+
+	if((nuevo = creaNodo(info)) == NULL)
+		return -1;
+
+	if((estaVacia(*raiz)))
+		*raiz = nuevo;
+	else
+	{
+		indice = *raiz;
+		while(indice->sig != NULL)
+			indice = indice->sig;
+		indice->sig = nuevo;
+	}
+
+	return 0;
+}
+
+/*
+ * Esta funciÃ³n recibe una lista (por referencia), un Ã­ndice entero y una
+ * variable de tipoInfo por referencia. Debe insertar un nuevo nodo
+ * en la posiciÃ³n indicada por el Ã­ndice entero (implica recorrido contando
+ * nodos hasta el valor indicado por indice). Ojo, hay que garantizar que 
+ * esa posiciÃ³n existe, es decir, que si la lista tiene 5 nodos, (los numeramos
+ * de 0 a 4), las posiciones vÃ¡lidas son 0, 1, 2, 3, 4, 5 (la posiciÃ³n 5
+ * es equivalente a aÃ±adir al final).
+ * Si la posiciÃ³n no existe, no se puede hacer la inserciÃ³n (en nuestro ejemplo,
+ * la posiciÃ³n -1 ya no existe, y la posiciÃ³n 6 tampoco).
+ * Se puede hacer uso de alguna de las funciones implementadas, aunque implique 
+ * ineficiencias (recorridos adicionales de la lista enlazada). Opcional 
+ * escribir una versiÃ³n eficiente que no implique repetir recorridos.
+ */
+int
+insertarNodoPosicionIndice(ListaEnlazadaRef raiz, int pos, tipoInfoRef info)
+{
+	tipoNodoRef nuevo, indice, anterior;
+	int numNodos;
+
+	// Numero nodos
+	numNodos = 0;
+	indice = *raiz;
+	while(indice != NULL)
+	{
+		indice = indice->sig;
+		numNodos++;
+	}
+
+	if(pos < 0 || pos > numNodos)
+		return -2;
+
+	if((estaVacia(*raiz)))
+	{
+		*raiz = nuevo;
+		return 0;
+	}
+	else
+	{
+		if(pos == numNodos)
+		{
+			if((insertarNodoFinal(raiz, info)) < 0)
+				return -3;
+			return 0;
+		}
+		else if(pos == 0)
+			{
+				if((nuevo = creaNodo(info)) == NULL)
+					return -1;
+
+				nuevo->sig = *raiz;
+				*raiz = nuevo;
+				return 0;
+			}
+			else
+			{
+				if((nuevo = creaNodo(info)) == NULL)
+					return -1;
+
+				indice = *raiz;
+				anterior = NULL;
+				numNodos = 0;
+				while(pos > numNodos)
+				{
+					anterior = indice;
+					indice = indice->sig;
+					numNodos++;
+				}
+
+				anterior->sig = nuevo;
+				nuevo->sig = indice;
+			}
+	}
+
+	return 0;
+}
+
+
+/*
+ * Elimina un nodo de la lista dada su posicion 
+ */
+int
+eliminarNodo(ListaEnlazadaRef raiz, tipoNodoRef pos)
+{
+	tipoNodoRef anterior;
+
+	if((estaVacia(*raiz)))
+		return -1;
+	else if(pos == NULL)
+		return -2;
+		else if(pos == *raiz)
+			{
+				*raiz = (*raiz)->sig;
+				free(pos);
+				return 0;
+			}
+
+	anterior = *raiz;
+	while(anterior->sig != pos)
+		anterior = anterior->sig;
+
+	anterior->sig = pos->sig;
+	free(pos);
+
+	return 0;
+}
+
+
+/*
+ * Elimina el primer nodo de la lista
+ */
+int
+eliminarNodoComienzo(ListaEnlazadaRef raiz)
+{
+	tipoNodoRef indice;
+
+	if((estaVacia(*raiz)))
+		return -1;
+
+	indice = *raiz;
+	*raiz = (*raiz)->sig;
+	free(indice);
+
+	return 0;
+	
+}
+
+
+/*
+ * Elimina el ultimo nodo de la lista
+ */
+int
+eliminarNodoFinal(ListaEnlazadaRef raiz)
+{
+	tipoNodoRef indice, anterior;
+
+	if((estaVacia(*raiz)))
+		return -1;
+
+	indice = *raiz;
+	anterior = NULL;
+	while(indice->sig != NULL)
+	{
+		anterior = indice;
+		indice = indice->sig;
+	}
+
+	if(anterior == NULL)
+	{
+		free(*raiz);
+		*raiz = NULL;
+		return 0;
+	}
+
+	anterior->sig = NULL;
+	free(indice);
+
+	return 0;
+}
+
+/*
+ * Esta funciÃ³n recibe una lista (por referencia) y un Ã­ndice entero
+ * Debe eliminar el nodo situado en en la posiciÃ³n indicada por el
+ * Ã­ndice entero (implica recorrido contando nodos hasta el valor
+ * indicado por indice). Ojo, hay que garantizar que
+ * esa posiciÃ³n existe, es decir, que si la lista tiene 5 nodos (los numeramos
+ * de 0 a 4), las posiciones vÃ¡lidas son 0, 1, 2, 3, 4.
+ * Si la posiciÃ³n no existe, no se puede hacer la eliminaciÃ³n (en nuestro ejemplo,
+ * la posiciÃ³n -1 ya no existe, y la posiciÃ³n 5 tampoco).
+ * Se puede hacer uso de alguna de las funciones implementadas, aunque 
+ * implique ineficiencias (recorridos adicionales de la lista enlazada). 
+ * Opcional escribir una versiÃ³n eficiente que no implique repetir recorridos.
+ */
+int
+eliminarNodoPosicionIndice(ListaEnlazadaRef raiz, int pos)
+{
+	tipoNodoRef nuevo, indice, anterior;
+	int indNodo;
+
+	// Numero nodos
+	indNodo = 0;
+	indice = *raiz;
+	while(indice->sig != NULL)
+	{
+		indice = indice->sig;
+		indNodo++;
+	}
+
+	if(pos < 0 || pos > indNodo)
+		return -2;
+
+	if((estaVacia(*raiz)))
+		return -1;
+	else
+	{
+		if(pos == 0)
+		{
+			indice = *raiz;
+			*raiz = (*raiz)->sig;
+			free(indice);
+			return 0;
+		}
+		indice= *raiz;
+		anterior = NULL;
+		indNodo = 0;
+		while(pos > indNodo)
+		{
+			anterior = indice;
+			indice = indice->sig;
+			indNodo++;
+		}
+
+		anterior->sig = indice->sig;
+		free(indice);
+	}
+
+	return 0;
+}
+
+/*
+ * Libera toda una lista
+ */
+int
+liberarListaEnlazada(ListaEnlazadaRef raiz)
+{
+	tipoNodoRef aBorrar, indice;
+
+	if((estaVacia(*raiz)))
+		return -1;
+
+	indice = *raiz;
+	while(indice != NULL)
+	{
+		aBorrar = indice;
+		indice = indice->sig;
+		free(aBorrar);
+	}
+	*raiz = NULL;
+
+	return 0;
+
+}
+
+
+/********************************************************************
+ *                                                                  *
+ * Las cuatro funciones que vienen a continuaciÃ³n dependen de cÃ³mo  *
+ * estÃ¡ definido el tipo de dato tipoInfo. No es lo mismo mostrar   *
+ * por pantalla el contenido de los datos almacenados en una lista  *
+ * enlazada si Ã©ste es de tipo entero, o si se trata de un registro.*
+ * Adicionalmente, y para que el alumno no pierda el tiempo         *
+ * en implementar funciones que aportan poco desde un punto de vista*
+ * docente, se proporcionan ya implementadas las funciones          *
+ * mostrarListaEnlazada() y crearListaValoresAleatorios(). Las otras*
+ * dos son sencillas y se dejan al alumno su implementaciÃ³n.        *
+ *                                                                  *
+ *******************************************************************/
+
+/*
+ * Esta funciÃ³n recibe una lista (por referencia) y un Ã­ndice entero
+ * Debe devolver la informaciÃ³n almacenada en el nodo situado en la 
+ * posiciÃ³n indicada por el Ã­ndice entero (implica recorrido contando nodos 
+ * hasta el valor indicado por indice). Ojo, hay que garantizar que
+ * esa posiciÃ³n existe, es decir, que si la lista tiene 5 nodos (los numeramos
+ * de 0 a 4), las posiciones vÃ¡lidas son 0, 1, 2, 3, 4.
+ * Si la posiciÃ³n no existe, no se puede devolver nada (en nuestro ejemplo,
+ * la posiciÃ³n -1 ya no existe, y la posiciÃ³n 5 tampoco).
+ * IMPORTANTE: tipoInfo es, en este caso particular, un entero. Aunque
+ * la dependencia es pequeÃ±a, si existe. Â¿CÃ³mo se devuelve el cÃ³digo de error
+ * en caso de no existir la posiciÃ³n indicada por el parÃ¡metro indice?. Si 
+ * tipoInfo es un int es sencillo, si es un registro tambiÃ©n, pero ya es
+ * diferente implementaciÃ³n.
+ */
+tipoInfo
+devolverInfoPosicionIndice(ListaEnlazada raiz, int pos)
+{
+	tipoNodoRef nuevo, indice;
+	tipoInfo info, error;
+	error = -1;
+
+	int indNodo;
+
+	// Numero nodos
+	indNodo = 0;
+	indice = raiz;
+	while(indice->sig != NULL)
+	{
+		indice = indice->sig;
+		indNodo++;
+	}
+
+	if(pos < 0 || pos > indNodo)
+		return error;
+
+	if((estaVacia(raiz)))
+		return error;
+	else
+	{
+		indice = raiz;
+		indNodo = 0;
+		while(pos > indNodo)
+		{
+			indice = indice->sig;
+			indNodo++;
+		}
+
+		return indice->info;
+	}
+}
+
+/*
+ * Inserta un nodo de forma ordenada segun su campo info
+ */
+int
+insertarOrdenada(ListaEnlazadaRef raiz, tipoInfoRef info)
+{
+	tipoNodoRef nuevo, indice, anterior;
+
+	if((nuevo = creaNodo(info)) == NULL)
+		return -1;
+
+	if(estaVacia(*raiz))
+		*raiz = nuevo;
+	else
+	{
+		indice = *raiz;
+		anterior = NULL;
+		while(indice->info < nuevo->info && indice->sig != NULL)
+		{
+			anterior = indice;
+			indice = indice->sig;
+		}
+
+		if(indice->info < nuevo->info && indice->sig == NULL)
+			indice->sig = nuevo;
+
+		else if(indice == *raiz) // anterior == NULL
+			{
+				nuevo->sig = indice;
+				*raiz = nuevo;
+			}
+			else
+			{
+				nuevo->sig = indice;
+				anterior->sig = nuevo;
+			}
+	}
+}
+/*
+ * Mostrar lista enlazada
+ */
+int
+mostrarListaEnlazada(ListaEnlazada raiz)
+{
+	tipoNodoRef aImprimir;
+	int res = 0,i = 0;
+	
+	printf("\nDireccion de memoria Comienzo Lista:\t%p\n",raiz);
+	printf("\n\n");
+	printf("%-14s%-10s%-22s\n","  PosiciÃ³n", "Valor", "Direcion de memoria");
+	printf("%-14s%-10s%-22s\n","  ==========", "======", "====================");
+
+
+	aImprimir = raiz;
+	while (aImprimir != NULL) {
+		printf("\t%3d)\t%7d\t%10p\n",i++, aImprimir->info, aImprimir);
+		aImprimir = aImprimir->sig;
+	}
+	return res;
+}
+/*
+ * Crear lista con valores aleatorios
+ */
+int
+crearListaValoresAleatorios(ListaEnlazadaRef raiz, int numNodos)
+{
+	int i;
+	tipoInfo temp;
+	
+	if (estaVacia(*raiz)) {
+		srandom(time(NULL));
+		for (i = 0; i < numNodos; i++) {
+            temp = random()%10000;
+            insertarDespuesDeNodo(raiz, NULL, &temp);
+            //insertarAntesDeNodo(raiz, NULL, &temp);
+            //insertarNodoFinal(raiz, &temp);
+			//insertarNodoComienzo(raiz, &temp);
+		}
+		return 0;
+	}
+	return -1;
+}
+/*
+ * Guardar lista en fichero
+ */
+int guardarListaEnlazadaTexto(ListaEnlazada raiz, char *nombreFichero)
+{
+	FILE *f;
+	int numElementos = 0;
+	tipoNodoRef indice;
+
+	if((f = fopen(nombreFichero, "w")) == NULL)
+		return -1;
+
+	indice = raiz;
+	while(indice != NULL)
+	{
+		if((escribirArchivoDelimitado(f, indice)) == -1)
+		{
+			fclose(f);
+			return -1;
+		}
+
+		numElementos++;
+		indice = indice->sig;
+	}
+
+	if((fclose(f)) != 0)
+	{
+		printf("Error al cerrar el archivo\n");
+		return -2;
+	}
+
+	return numElementos;
+}
+/*
+ * Cargar lista desde fichero
+ */
+int cargarListaEnlazadaTexto (ListaEnlazadaRef raiz, char *nombreFichero)
+{
+	FILE *f;
+	int numElementos = 0;
+
+	if((f = fopen(nombreFichero, "r")) == NULL)
+		return -1;
+
+	while((leerArchivoDelimitado(f, raiz)) != EOF)
+		numElementos++;
+
+	fclose(f);
+
+	return numElementos;
+}
+
+int escribirArchivoDelimitado(FILE *f, ListaEnlazada raiz)
+{
+	int numCar;
+
+	if((numCar = (fprintf(f, "%d ", raiz->info))) < 0)
+		return -1;
+	else
+		return numCar;
+}
+
+int leerArchivoDelimitado(FILE *f, ListaEnlazadaRef raiz)
+{
+	tipoInfo i;
+	if((fscanf(f, "%d", &i)) == EOF)
+		return (EOF);
+	else
+	{
+		insertarNodoFinal(raiz, &i);
+		return 0;
+	}
+}
 
 
 
