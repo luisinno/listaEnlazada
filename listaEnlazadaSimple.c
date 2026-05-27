@@ -409,8 +409,95 @@ crearListaValoresAleatorios(ListaEnlazadaRef raiz, int numNodos)
 
 
 
-// RESUELTO. 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// RESUELTO.
 
 
 //
@@ -1639,6 +1726,224 @@ int main (void) {
 		indice = indice->sig;
 	}
 
+	printf("\n");
+
+// *** -----------------------------------
+// *** 9) Devolver el campo información de un nodo identificado por su posicion en la lista
+// ***     Debe obtenerse la información almacenada en el nodo situado en la posición indicada 
+// ***     por un índice entero (0 para primer nodo, 1 para segundo, 2 para tercero, etc, ...)
+// ***     Implica recorrido contando nodos hasta el valor indicado por índice. 
+// ***     Atención, hay que garantizar que esa posición existe, es decir, que si la lista 
+// ***     tiene 4 nodos (los numeramos de 0 a 3), las posiciones válidas son 0, 1, 2, 3. 
+// ***     Si la posición no existe, no se puede devolver nada (en nuestro ejemplo, la posición -1
+// ***     o cualquier otro número negativo, no existe, y la posición 4 y superiores tampoco).
+// *** -----------------------------------
+
+	printf("\n\nDEVOLVER INFORMACION NODO\n");
+	printf("-------------------------\n\n");
+
+	if(lista != NULL)
+	{
+		// Numero nodos
+		cuantos = 0;
+		indice = lista;
+		while(indice != NULL)
+		{
+			indice = indice->sig;
+			cuantos++;
+		}
+
+		// Introducir numero de nodo
+		num = -1;
+		while(num < 0 || num > cuantos)
+		{
+			printf("Introduzca un valor\n(Mayor o igual que 0 y menor o igual que %d)\t",cuantos-1);
+			scanf("%d",&num);
+		}
+
+		// Busequeda del dato
+		cuantos = 0;
+		indice = lista;
+		while(num > cuantos)
+		{
+			indice = indice->sig;
+			cuantos++;
+		}
+
+		printf("Dato de la posicion %d de la lista:\t%d\n", num, indice->info);
+	}
+
+// *** -----------------------------------
+// *** 10) Eliminar un nodo identificado por su posicion en la lista
+// ***     Debe eliminarse el nodo situado en la posición indicada por un índice entero
+// ***     (0 para primer nodo, 1 para segundo, 2 para tercero, etc, ...)
+// ***     Implica recorrido contando nodos hasta el valor indicado por índice.
+// ***     Atención, hay que garantizar que esa posición existe, es decir, que si la lista 
+// ***     tiene 4 nodos (los numeramos de 0 a 3), las posiciones válidas son 0, 1, 2, 3. 
+// ***     Si la posición no existe, no se hace nada.
+// *** -----------------------------------
+
+	printf("\n\nELIMINAR NODO POR POSICION\n");
+	printf("---------------------------\n\n");
+
+	if(lista != NULL)
+	{
+		// Numero nodos
+		cuantos = 0;
+		indice = lista;
+		while(indice != NULL)
+		{
+			indice = indice->sig;
+			cuantos++;
+		}
+
+		// Introducir numero de nodo
+		num = -1;
+		while(num < 0 || num > cuantos)
+		{
+			printf("Introduzca un valor\n(Mayor o igual que 0 y menor o igual que %d)\t",cuantos-1);
+			scanf("%d",&num);
+		}
+
+		// Busequeda del dato
+		cuantos = 0;
+		anterior = NULL;
+		indice = lista;
+		while(num > cuantos)
+		{
+			anterior = indice;
+			indice = indice->sig;
+			cuantos++;
+		}
+
+		if(indice == lista)
+		{
+			lista = lista->sig;
+			free(indice);
+			indice = NULL;
+		}
+		else
+		{
+			anterior->sig = indice->sig;
+			free(indice);
+			indice = NULL;
+		}
+	}
+
+// *** --------------------------
+// *** Visualizacion de la lista
+// *** --------------------------
+
+	printf("\nMORASTRAR INFORMACION LISTA ENLAZADA\n");
+	printf("------------------------------------\n\n");
+
+	indice = lista;
+
+	printf("Lista enlazada:\n\t");
+	while(indice != NULL)
+	{
+		printf("%d\t",indice->info);
+
+		indice = indice->sig;
+	}
+
+	printf("\n");
+
+// *** -----------------------------------
+// *** 11) Insertar un nodo identificado por su posicion en la lista
+// ***     (0 para primer nodo, 1 para segundo, 2 para tercero, etc, ...)
+// ***     Si la posicion no existe el nodo se inserta como ultimo.
+// ***     Por ejemplo, sila lista tiene 4 nodos (los numeramos de 0 a 3), y se 
+// ***     ha indicado como posicion 6, el nodo se inserta ultimo
+// *** -----------------------------------
+
+	printf("\n\nINSERTAR NODO POR POSICION\n");
+	printf("---------------------------\n\n");
+
+	if(lista != NULL)
+	{
+		// Numero nodos
+		cuantos = 0;
+		indice = lista;
+		while(indice != NULL)
+		{
+			indice = indice->sig;
+			cuantos++;
+		}
+
+		// Introducir numero de nodo
+		pos = -1;
+		while(pos < 0)
+		{
+			printf("Introduzca un valor\n(Mayor o igual que 0)\t");
+			scanf("%d",&pos);
+		}
+	
+		num = -1;
+		while(num <= 0)
+		{
+			printf("Introduzca un valor\n(Salir: valor igual o menor que 0)\t");
+			scanf("%d",&num);
+		}
+
+		if((nuevo = malloc(1*sizeof(tipoNodo))) == NULL)
+		{
+			printf("Error en la reserva dinamica");
+			return -1;
+		}
+
+		nuevo->info = num;
+		nuevo->sig = NULL;
+
+		// Busequeda del dato
+		anterior = NULL;
+		indice = lista;
+		if(pos > cuantos)
+		{
+			while(indice->sig != NULL)
+				indice = indice->sig;
+			indice->sig = nuevo;
+		}
+		else
+		{
+			cuantos = 0;
+			while(pos > cuantos)
+			{
+				anterior = indice;
+				indice = indice->sig;
+				cuantos++;
+			}
+
+			if(indice == lista)
+			{
+				nuevo->sig = indice;
+				lista = nuevo;
+			}
+			else
+			{
+				anterior->sig = nuevo;
+				nuevo->sig = indice;
+			}
+		}
+	}
+
+// *** --------------------------
+// *** Visualizacion de la lista
+// *** --------------------------
+
+	printf("\nMORASTRAR INFORMACION LISTA ENLAZADA\n");
+	printf("------------------------------------\n\n");
+
+	indice = lista;
+
+	printf("Lista enlazada:\n\t");
+	while(indice != NULL)
+	{
+		printf("%d\t",indice->info);
+
+		indice = indice->sig;
+	}
+
 	printf("\n");*/
 
 // *** -----------------------------------
@@ -1671,7 +1976,7 @@ int main (void) {
 }
 
 
-/*//EJ PRACT 13_________________________________________________________________________________
+/*//clase luis 2025, mismo ej_________________________________________________________________________________
 
 
 int main (void) {
