@@ -9,7 +9,7 @@
 
 int main(int argc, const char * argv[])
 {
-	char menu[] = "Listas enlazadas:\n A) Crear lista aleatoria\n B) Añadir al principio\n C) Añadir al final\n D) Insertar en posición por índice\n E) Devolver valor en posición por índice\n F) Eliminar al principio\n G) Eliminar al final\n H) Eliminar en posición por índice\n I) Crear lista ordenada\n J) Mostrar lista\n K) Liberar listas\n Q) Salir\n";
+	char menu[] = "Listas enlazadas:\n A) Crear lista aleatoria\n B) Añadir al principio\n C) Añadir al final\n D) Insertar en posición por índice\n E) Devolver valor en posición por índice\n F) Eliminar al principio\n G) Eliminar al final\n H) Eliminar en posición por índice\n I) Crear lista ordenada\n J) Mostrar lista\n K) Liberar listas\n Q) Salir\n"; //L) Exportar lista a fichero\n M) Importar lista desde fichero\n
     ListaEnlazada raiz,raizOrdenada;
 	tipoNodoRef aux;
 	int indice,i;
@@ -105,9 +105,24 @@ int main(int argc, const char * argv[])
                 printf("Liberación raiz: %d\n",liberarListaEnlazada(&raiz));
                 printf("Liberación raizOrdenada: %d\n",liberarListaEnlazada(&raizOrdenada));
                 break;
+            
+
             default:
 				printf("\n\nOpción incorrecta!\a\n\n");
 				break;
+
+            /*
+            	case 'L':
+                printf("Mostrando lista raiz: %d\n",mostrarListaEnlazada(raiz));
+				numNodos = guardarListaEnlazadaTexto(raiz, FICHERO_ESC);
+				printf("Numero de elementos de la lista: %d\n",numNodos);
+                break;
+			case 'M':
+                numNodos = cargarListaEnlazadaTexto (&raiz, FICHERO_LEC);
+				printf("Mostrando lista raiz: %d\n",mostrarListaEnlazada(raiz));
+				printf("Numero de elementos de la lista: %d\n",numNodos);
+                break;
+            */
 		}
         printf("\nPulse enter...");
         getchar();
@@ -116,3 +131,16 @@ int main(int argc, const char * argv[])
     return 0;
 }
 
+/*
+
+FICHEROS DE TEXTO. 
+
+LISTA ESCRITURA
+8206 9948 2403 8567 4829 1428 6706 2771 1620 6771 9879 1003 8266 4495 3423 9205 8157 3090 8297 5232 
+
+LISTA LECTURA
+9446 7786 6733 2823 5372 703 3618 7833 29 2009 
+
+
+
+*/
