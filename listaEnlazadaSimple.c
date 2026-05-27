@@ -497,7 +497,7 @@ crearListaValoresAleatorios(ListaEnlazadaRef raiz, int numNodos)
 
 
 
-// RESUELTO.
+// RESUELTO. pablo (indice de luis, es pos de pablo)
 
 
 //
@@ -1057,6 +1057,19 @@ crearListaValoresAleatorios(ListaEnlazadaRef raiz, int numNodos)
 	}
 	return -1;
 }
+
+
+
+
+
+
+
+
+//FICHEROS
+
+
+//PABLO
+
 /*
  * Guardar lista en fichero
  */
@@ -1135,6 +1148,96 @@ int leerArchivoDelimitado(FILE *f, ListaEnlazadaRef raiz)
 
 
 
+/*
+//FICHEROS JAVI
+
+#include <stdio.h>
+#include <stdlib.h>
+
+	typedef struct Nodo
+	{
+	int info;
+	struct Nodo *sig;
+	}tipoNodo;
+	
+	
+	int guardarListaenTexto(tipoNodo *lista, char *nombreFichero)
+	{
+		FILE *fp;
+		tipoNodo *aux;
+		int contador;
+		
+		if(lista==NULL)
+			return -1;
+		
+		fp=fopen(nombreFichero, "w");
+		
+		if(fp==NULL)
+			return -1;
+			
+		aux=lista;
+		contador=0;
+		
+		while(aux!=NULL)
+		{
+			fprintf(fp, "%d ", aux->info);
+			aux=aux->sig;
+			contador++;
+				
+		}
+		
+		
+		fclose(fp);
+		return contador;
+	}
+	
+	int cargarListadeTexto(tipoNodo **raiz, char *nombreFichero)
+	{
+		FILE *fp;
+		tipoNodo *nuevo;
+		tipoNodo *aux;
+		int num;
+		
+		if(raiz == NULL)
+			return -1;
+			
+		fp=fopen(nombreFichero, "r");
+		if(fp==NULL)
+			return -1;
+			
+		while(fscanf(fp,"%d",&num)!=EOF)
+		{
+			
+			nuevo = malloc(sizeof(tipoNodo));
+			if(nuevo==NULL)
+				return -2;
+			nuevo->sig = NULL;	
+			nuevo->info=num;
+			
+			if(*raiz==NULL)
+			{
+				*raiz=nuevo;	
+			}
+			else
+			{
+				aux=*raiz;
+				while(aux->sig!=NULL)
+				{
+					aux=aux->sig;
+				}
+				aux->sig=nuevo;
+			}
+			
+
+			
+		}
+			
+		fclose(fp);
+		
+		return 0;
+	}
+	
+*/
 
 
 
@@ -2430,200 +2533,3 @@ int main()
 
 //------------------------------------------------------------------------------------------------------------------------------------------
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//FICHEROS JAVI
-
-#include <stdio.h>
-#include <stdlib.h>
-
-	typedef struct Nodo
-	{
-	int info;
-	struct Nodo *sig;
-	}tipoNodo;
-	
-	
-	int guardarListaenTexto(tipoNodo *lista, char *nombreFichero)
-	{
-		FILE *fp;
-		tipoNodo *aux;
-		int contador;
-		
-		if(lista==NULL)
-			return -1;
-		
-		fp=fopen(nombreFichero, "w");
-		
-		if(fp==NULL)
-			return -1;
-			
-		aux=lista;
-		contador=0;
-		
-		while(aux!=NULL)
-		{
-			fprintf(fp, "%d ", aux->info);
-			aux=aux->sig;
-			contador++;
-				
-		}
-		
-		
-		fclose(fp);
-		return contador;
-	}
-	
-	int cargarListadeTexto(tipoNodo **raiz, char *nombreFichero)
-	{
-		FILE *fp;
-		tipoNodo *nuevo;
-		tipoNodo *aux;
-		int num;
-		
-		if(raiz == NULL)
-			return -1;
-			
-		fp=fopen(nombreFichero, "r");
-		if(fp==NULL)
-			return -1;
-			
-		while(fscanf(fp,"%d",&num)!=EOF)
-		{
-			
-			nuevo = malloc(sizeof(tipoNodo));
-			if(nuevo==NULL)
-				return -2;
-			nuevo->sig = NULL;	
-			nuevo->info=num;
-			
-			if(*raiz==NULL)
-			{
-				*raiz=nuevo;	
-			}
-			else
-			{
-				aux=*raiz;
-				while(aux->sig!=NULL)
-				{
-					aux=aux->sig;
-				}
-				aux->sig=nuevo;
-			}
-			
-
-			
-		}
-			
-		fclose(fp);
-		
-		return 0;
-	}
-	
