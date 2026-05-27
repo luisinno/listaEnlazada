@@ -1578,6 +1578,7 @@ int main (void) {
 
 	printf("\n");
 
+/*
 // *** -------------------------------------------------
 // *** 8) Eliminar un nodo de la lista por su contenido
 // *** -------------------------------------------------
@@ -1638,10 +1639,10 @@ int main (void) {
 		indice = indice->sig;
 	}
 
-	printf("\n");
+	printf("\n");*/
 
 // *** -----------------------------------
-// *** 12) Bucle para eliminar cada uno de los nodos de la lista enlazada
+// *** ULTIMO (5) 12) Bucle para eliminar cada uno de los nodos de la lista enlazada
 // *** Al finalizar este algoritmo lst queda con valor NULL
 // *** -----------------------------------
 
