@@ -1193,1183 +1193,8 @@ int leerArchivoDelimitado(FILE *f, ListaEnlazadaRef raiz)
 
 
 
-
-
-
-
-
-//EJ PRACT 13_________________________________________________________________________________
-
-
-int main (void) {
-
-// *** -----------------------------------
-// *** 1) Crear una lista enlazada vac�a
-// *** ----------------------------------
-
-//CREACION DE NODO
-   nuevo = malloc(sieof(tipoNodo));
-   if(nuevo == NULL)
-   else {
-
-}
-
-
-
-// *** -----------------------------------
-// *** 2) Crear un bucle que vaya leyendo n�meros hasta que se teclee 0 o negativo 
-// ***   (bucle controlado por centinela). Por cada n�mero le�do debe de crear un nodo
-// ***   y enlazarlo como PRIMERO a la lista enlazada.
-// *** ----------------------------------
-
-printf
-while
-
-
-
-
-
-// *** -----------------------------------
-// *** 3) Crear un bucle para que recorra la lista, la visualice, 
-// ***    cuente sus nodos y obtenga la suma del valor de todos los nodos
-// ***    Imprimir el n�mero de nodos y su suma en pantalla
-// *** ----------------------------------
-printf("lista enlazada");
-
-cuantos = 0;
-suma = 0;
-
-indice = lst; //empezar
-while (indice != NULL){
-	//tratamiento del nodo
-printf("%d", indice -> info);
-cuantos ++;
-______
-______
-
-
-
-
- indice = indice -> sig; //cada vez que quiera avanzar
-}
-// ej lista vacia: sirve porque no hay nada que recorrer, el algoritmo no falla
-
-
-
-// *** -----------------------------------
-// *** 4) Crear un bucle que vaya leyendo n�meros hasta que se teclee 0 o negativo
-// ***    (bucle controlado por centinela). Por cada n�mero le�do debe de crear un nodo y enlazarlo 
-// ***    como ULTIMO a la lista enlazada.
-// *** ----------------------------------
-
-if (lst==NULL) //hacemos este if para que si la lista este vacía, el algoritmo while sea valido
-	lst = nuevo;
-else{
-indice = lst;
-while (indice->sig != NULL) //indice se queda apuntando al ultimo nodo, el puntero de ese nodo va a null, por eso sabemos que es el último
-	indice = indice->sig;
-indice->sig = nuevo; //OBLIGATORIO
-}
-
-// *** ----------------------------------------------------
-// --- 4.1 Versi�n 1 del Algoritmo. Ante cada inserci�n, siempre recorremos la lista
-// --- desde el principio hasta localizar el ultimo nodo. Es poco eficiente
-// *** ----------------------------------------------------
-   
-
-//recorremos una vez hasta encontrar el último nodo, apuntamos con un puntero al último nodo
-ultimo=lst;
-if (lst != NULL){
-ultimo=lst;
-while(ultimo->sig != NULL) //si la lista está vacía: error
-	ultimo = ultimo -> sig
-}
-...
-...
-if (lst==NULL){
-	lst=nuevo;
-	ultimo=nuevo;
-}
-else{
-	ultimo->sig=nuevo;
-	ultimo=nuevo;
-}
-
-// ultimo->sig=nuevo;
-// ultimo=nuevo; //SIEMPRE DEJAMOS APUNTADO EL ÚLTIMO NODO
-
-
-// *** -----------------------------------
-// *** Bucle para recorrer la lista para visualizarla
-// *** Similar al creado en el punto 3)
-// *** ----------------------------------
-
-/*
-
-1) Crear una lista enlazada vacía (definir la variable correspondiente)
-
-2) Crear un bucle que vaya leyendo números hasta que se teclee uno 0 o negativo (bucle controlado por centinela). Por cada número leído debe de crearse un nodo y enlazarlo como primero a la lista enlazada
-
-3) Crear un bucle para que recorra la lista, la visualice, cuente sus nodos y obtenga la suma del valor de todos los nodos
-
-4) Crear un bucle que vaya leyendo números hasta que se teclee uno 0 o negativo (bucle controlado por centinela). Por cada número leído debe de crear un nodo y enlazarlo como ultimo a la lista enlazada. Se deben escribir dos versiones de este algoritmo
-   1.- Ante cada inserción, siempre recorremos la lista desde el principio hasta localizar el último nodo. Es poco eficiente
-   2.- Recorremos la lista la primera vez para localizar el ultimo nodo, y a partir de ahí, mantenemos un puntero al último nodo de forma que así hacemos más eficientes las inserciones
-
-
-
-5) Crear un bucle que elimine todos los nodos de la lista (dejar la lista vacia)*/
-
-
-//para lista vacía: OK
-aborrar = lst; //apuntar al primer nodo
-while (lst != NULL){
-	lst = lst->sig; //1 apuntar al siguiente
-	free(aborrar); //2 liberar
-	aborrar = lst; //3
-}
-// 1 2 3 o 3 1 2 
-/*
-OTRA OPCIÓN: indice apunta a todos los elementos, aborrar va por detras de el liberando todos los nodos. 
-
-indice = lst;
-whule(indice != NULL){
-	aborrar = indice;
-	indice = indice->sig
-	free(aborrar);
-}
-	lst = NULL; // no se modifica el valor del puntero de la lista, por eso igualamos al final a NULL
-*/
-
-
-//6) Eliminar el primer nodo de la lista
-
-//también es válido si solo tiene 1 nodo o si está vacia
-
-if (lst != NULL){
-	aborrar = lst;
-	lst = lst->sig;
-	free(aborrar);
-}
-
-//7) Eliminar el ultimo nodo de la lista
-
-if (lst != NULL){
-	ultimo = lst;
-	anterior = NULL;
-while (ultimo->sig != NULL){
-	anterior = ultimo;
-	ultimo = ultimo->sig;
-	}
-if (anterior == NULL) {
-	free (lst);
-	lst = NULL;//resolvemos si solo hay un nodo 
-	} else{
-	free(ultimo);
-	anterior->sig = NULL; // error si solo hay un nodo
-	}
-}
-//ROBUSTEZ (vacia ok), si solo hay uno 
-
-
-
-
-
-
-
-//8) Insertar un nodo en orden en una lista enlazada MAS COMPLEJO: 4 ramas
-
-
-//si la lista está vacía, el nodo que acabo de crear es el primero
-if (lst == NULL) {
-	lst = nuevo;
-}
-
-// en otro caso, recorremos la lista con DOS PUNTEROS, que apunten a los nodos entre los que inserto el nuevo
-else { //lista no vacía
-	indice = lst;
-	anterior = NULL;
-	while ( (indice->info < nuevo->info)&& (indice->sig != NULL)){
-		anterior = int indice;
-		indice = indice->sig;
-	} //hemos encontrado los nodos a los que apuntaremos entre los que metemos el nuevo
-//resolver ERROR 1
-//el nodo se inserta como primero
-	if (anterior == NULL) {
-	nuevo->sig = lst;
-	lst = nuevo;
-}
-//resolver error 2
-else if ((indice->sig==NULL)&&(indice->info < nuevo->info)){
-//el nodo se inserta al final 
-	nuevo->sig = NULL;
-	indice->sig= nuevo;
-}
-
-else { //el nodo se inserta en medio de la lista
-		nuevo->sig= indice; //ERROR 2; (si apunta al último, lo esta apuntando delante, y lo quiero detras)
-		anterior->sig= nuevo; //ERROR 1 (si apunta al primero)
-
-}
-
-
-// FIN
-
-/*
-9) Eliminar un nodo de la lista por su contenido
-
-10) Devolver la información de un nodo de la lista identificado por su posición
-
-11) Eliminar un nodo de la lista identificado por su posición
-
-12) Insertar un nodo en la lista, en una posición indicada
-
-
-*/
-
-
-//-------------------------------------------------------------------------------------
-// EJEMPLOS DE LISTAS ENLAZADAS: EJ
- 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-// DEFINIR STRUCT: NODO
-
-struct _agenda {
-	char nombre[20];
-	char telefono[12];
-	struct _agenda *siguiente;
-};
-
- 
-// MOSTRAR MENU 
-
-
-void mostrar_menu()
- {
-	fflush(stdout);
-	printf("\n\nMenu:\n=====\n\n");
-	printf("1.- ANadir elementos\n");
-	printf("2.- Borrar elementos\n");
-	printf("3.- Mostrar lista\n");
-	printf("4.- Salir\n\n");
-	printf("Escoge una opcion: ");
-}
-/* Con esta funcion se anade un elemento al final de la lista */
-void anadir_elemento(struct _agenda **primero)
- {
-	struct _agenda *nuevo, *ant, *aux=*primero;
-	/* Se reserva memoria para el nuevo elemento */
-	nuevo = (struct _agenda *) malloc (sizeof(struct _agenda));
-	if (nuevo==NULL)
-	{
-		printf( "No hay memoria disponible!\n");
-		exit(0);
-
-	}
 	
- 	printf("\nNombre a incluir: ");
-	scanf("%s%*c",nuevo->nombre);
-	printf("\nTelefono: ");
-	scanf("%s",nuevo->telefono);
-	
-       /* Ahora se introduce el nuevo elemento en la lista.
-	Se situa al final de la lista */
-	if (*primero==NULL) {
-		printf( "Primer elemento\n");
-		*primero = nuevo;
-        nuevo->siguiente=NULL;
-	}
-      else
-        { 
-         if ((strcmp(nuevo->nombre, aux->nombre))<0) 
-          {
-            nuevo->siguiente=*primero;
-            *primero=nuevo;
-          }
-         else
-          {
-           ant=NULL;
-           while(aux!=NULL && strcmp(nuevo->nombre, aux->nombre)>0)  
-           {
-             ant=aux;
-             aux=aux->siguiente;
-           }
-           if (aux==NULL)
-           {
-              ant->siguiente=nuevo;
-              nuevo->siguiente=NULL;
-          }
-          else
-          {
-              nuevo->siguiente=aux;
-              ant->siguiente=nuevo;
-          }
-         }
-    }
-}
-
-// ELIMINAR LISTA
-
-void eliminar_lista(struct _agenda **primero, char *nombre) 
-{
-
-     struct _agenda *auxiliar, *ant=NULL; /* Para recorrer la lista */
-	 int lon=20;	 
-	 nombre=(char *)malloc(lon *sizeof(char));
- 	 printf("\nNombre a eliminar: ");
-	 scanf("%s",nombre);
-	 getchar();
- 	for (auxiliar=*primero;auxiliar!=NULL && (strcmp(auxiliar->nombre, nombre)!=0);ant= auxiliar,auxiliar = auxiliar->siguiente);
-	{
-		if(!strcmp(auxiliar->nombre, nombre)==0)
-	    {
-         printf("\nNo se encontro ");
-         }
-         else
-         {
-             printf("\n Encontro el nombre");
-             if(ant==NULL)
-             { 
-		       if (auxiliar->siguiente == NULL)
-		       {
-                *primero=NULL; /*es el primero y el unico*/
-                free(ant);
-                }   
-	           else
-		       {
-		        auxiliar = auxiliar->siguiente;/*es el primero*/
-                *primero=auxiliar;
-                free(ant);
-                }
-             }   
-	    	else
-		    {
-		      if (auxiliar->siguiente == NULL)
-		      {
-			  /*Es el ultimo*/
-			  ant->siguiente=NULL;
-			  free(auxiliar);
-			 }
-	         else 
-		    {
-		     ant->siguiente=auxiliar->siguiente;
-		     free(auxiliar);
-		     		 }
-     }
-	}
-  }
-
-}
-
-
-// MOSTRAR LISTA
- 
-void mostrar_lista(struct _agenda *primero) 
-{
-	struct _agenda *auxiliar; /* Para recorrer la lista */
-	int i;
-	i=0;
-	auxiliar = primero;
- 	printf("\nMostrando la lista completa:\n");
-	while (auxiliar!=NULL)
-	{
-		printf("Nombre: %s, Telefono: %s\n",
-		auxiliar->nombre, auxiliar->telefono);
-		auxiliar = auxiliar->siguiente;
-		i++;
-	}
-if (i==0) printf( "\nLa lista esta  vacia!!\n" );
-}
-int main()
-{
- 
-  struct _agenda *primero = NULL;
-  struct _agenda *ultimo = NULL;
-
-  char opcion;
-  char *nombre="";
-  do 
-  {
-    fflush(stdout);
-    mostrar_menu();
-    fflush(stdin);
-    opcion = getchar();
-    switch ( opcion )
-	{
-      case '1':
-           {
-            anadir_elemento(&primero);
-	         break;
-          }
-      case '2':{
-            eliminar_lista(&primero,nombre) ;
-	        break;
-         }
-      case '3': {
-               mostrar_lista(primero);
-	           break;
-            }
-      case '4': exit( 1 );
-      default:{
-                printf( "Opcion no valida\n" );
-	            break;
-             }
-}
-} while (opcion!='4');
-}
-
-
-
-
-
-
-
-
-
-
-//------------------------------------------------------------------------------------------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//FICHEROS JAVI
-
-#include <stdio.h>
-#include <stdlib.h>
-
-	typedef struct Nodo
-	{
-	int info;
-	struct Nodo *sig;
-	}tipoNodo;
-	
-	
-	int guardarListaenTexto(tipoNodo *lista, char *nombreFichero)
-	{
-		FILE *fp;
-		tipoNodo *aux;
-		int contador;
-		
-		if(lista==NULL)
-			return -1;
-		
-		fp=fopen(nombreFichero, "w");
-		
-		if(fp==NULL)
-			return -1;
-			
-		aux=lista;
-		contador=0;
-		
-		while(aux!=NULL)
-		{
-			fprintf(fp, "%d ", aux->info);
-			aux=aux->sig;
-			contador++;
-				
-		}
-		
-		
-		fclose(fp);
-		return contador;
-	}
-	
-	int cargarListadeTexto(tipoNodo **raiz, char *nombreFichero)
-	{
-		FILE *fp;
-		tipoNodo *nuevo;
-		tipoNodo *aux;
-		int num;
-		
-		if(raiz == NULL)
-			return -1;
-			
-		fp=fopen(nombreFichero, "r");
-		if(fp==NULL)
-			return -1;
-			
-		while(fscanf(fp,"%d",&num)!=EOF)
-		{
-			
-			nuevo = malloc(sizeof(tipoNodo));
-			if(nuevo==NULL)
-				return -2;
-			nuevo->sig = NULL;	
-			nuevo->info=num;
-			
-			if(*raiz==NULL)
-			{
-				*raiz=nuevo;	
-			}
-			else
-			{
-				aux=*raiz;
-				while(aux->sig!=NULL)
-				{
-					aux=aux->sig;
-				}
-				aux->sig=nuevo;
-			}
-			
-
-			
-		}
-			
-		fclose(fp);
-		
-		return 0;
-	}
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-// ej res pablo 1
-#include <stdio.h>
-#include <stdlib.h>
-
-// *** ---------------------------
-// *** Definicion del tipo nodo
-// *** ---------------------------
-typedef int tipoInfo;
-
-typedef struct tipoNodo {         
-    tipoInfo info;
-    struct tipoNodo *sig;
-} tipoNodo;
-
-
-
-int main (void) {
-
-// *** -----------------------------------
-// *** 1) Crear una lista enlazada vacía
-// *** ----------------------------------
-
-   tipoNodo *lst;      // Puntero de entrada a la lista enlazada
-
-   tipoNodo *nuevo;    // Punteros auxiliares para los algoritmos
-   tipoNodo *indice;
-   tipoNodo *aborrar;
-   tipoNodo *ultimo;
-
-   tipoInfo num;
-   int cuantos;
-   long suma;
-
-   lst = NULL;         // Iniciamos a "vacia" la lista enlazada
-
-
-// *** -----------------------------------
-// *** 2) Crear un bucle que vaya leyendo números hasta que se teclee 0 o negativo 
-// ***   (bucle controlado por centinela). Por cada número leído debe de crear un nodo
-// ***   y enlazarlo como PRIMERO a la lista enlazada.
-// *** ----------------------------------
-
-   printf("\n\nCREAR LISTA ENLAZANDO NODOS COMO PRIMERO\n");
-   printf("Introduzca numero (<=0 para terminar): ");
-   scanf("%d", &num);
-   while (num >0) {
-      nuevo = (tipoNodo *) malloc(sizeof(tipoNodo));
-      nuevo->info = num;
-      nuevo->sig = NULL;
-
-      nuevo->sig = lst;
-      lst = nuevo;
-
-      printf("Introduzca numero (<=0 para terminar): ");
-      scanf("%d", &num);
-   }
-
-
-// *** -----------------------------------
-// *** 3) Crear un bucle para que recorra la lista, la visualice, 
-// ***    cuente sus nodos y obtenga la suma del valor de todos los nodos
-// ***    Imprimir el numero de nodos y su suma en pantalla
-// *** ----------------------------------
-
-   printf("\nLista enlazada:\n");
-
-   cuantos = 0;
-   suma = 0;
-   indice = lst;
-   while (indice != NULL) {
-      printf("%d\n", indice->info);
-      cuantos++;
-      suma = suma + indice->info;
-      indice = indice-> sig;
-   }
-
-   printf("La lista enlazada tiene %d nodos.\n", cuantos);
-   printf("El valor de su suma es %ld.\n", suma);
-
-
-// *** -----------------------------------
-// *** 4) Crear un bucle que vaya leyendo números hasta que se teclee 0 o negativo
-// ***    (bucle controlado por centinela). Por cada número leído debe de crear un nodo y enlazarlo 
-// ***    como ULTIMO a la lista enlazada.
-// *** ----------------------------------
-// *** ----------------------------------------------------
-// --- 4.1 Versión 1 del Algoritmo. Ante cada inserción, siempre recorremos la lista
-// --- desde el principio hasta localizar el ultimo nodo. Es poco eficiente
-// *** ----------------------------------------------------
-   printf("\n\nCREAR LISTA ENLAZANDO NODOS COMO ULTIMO (algoritmo 1)\n");
-   printf("Introduzca numero (<=0 para terminar): ");
-   scanf("%d", &num);
-   while (num >0) {
-
-      nuevo = (tipoNodo *) malloc(sizeof(tipoNodo));
-      nuevo->info = num;
-      nuevo->sig = NULL;
-
-      // Localizamos el ultimo nodo
-      indice = lst;
-      if (indice == NULL)
-        lst = nuevo;
-      else {
-        while (indice->sig != NULL)
-           indice = indice->sig;
-        indice->sig = nuevo;
-      }
-
-      printf("Introduzca numero (<=0 para terminar): ");
-      scanf("%d", &num);
-   }
-
-// *** -----------------------------------
-// *** Bucle para recorrer la lista para visualizarla
-// *** Similar al creado en el punto 3)
-// *** ----------------------------------
-   printf("\nLista enlazada:\n");
-
-   indice = lst;
-   while (indice != NULL) {
-      printf("%d\n", indice->info);
-      indice = indice-> sig;
-   }
-
-
-// *** ----------------------------------------------------
-// --- 4.2 Versión 2 del Algoritmo. Recorremos la lista la primera vez para lozalizar el ultimo
-// --- nodo, y a partir de ahí, mantenemos un puntero al ultimo nodo de forma que asi hacemos
-// --- más eficientes las inserciones.
-// *** ----------------------------------------------------
-
-   ultimo = lst;
-   if (lst != NULL)
-    while (ultimo->sig != NULL)
-      ultimo = ultimo -> sig;
-
-   printf("\n\nCREAR LISTA ENLAZANDO NODOS COMO ULTIMO (algoritmo 2)\n");
-   printf("Introduzca numero (<=0 para terminar): ");
-   scanf("%d", &num);
-   while (num > 0) {
-
-      nuevo = (tipoNodo *) malloc(sizeof(tipoNodo));
-      nuevo->info = num;
-      nuevo->sig = NULL;
-
-      // El ultimo nodo está apuntado por ultimo
-      if (lst == NULL) {
-        lst = nuevo;
-        ultimo = nuevo;
-      }
-      else {
-        ultimo->sig = nuevo;
-        ultimo = nuevo;  // Siempre dejamos apuntado el ultimo nodo
-      }
-
-      printf("Introduzca numero (<=0 para terminar): ");
-      scanf("%d", &num);
-   }
-
-
-// *** -----------------------------------
-// *** Bucle para recorrer la lista para visualizarla
-// *** Similar al creado en el punto 3)
-// *** ----------------------------------
-   printf("\nLista enlazada:\n");
-
-   indice = lst;
-   while (indice != NULL) {
-      printf("%d\n", indice->info);
-      indice = indice-> sig;
-   }
-
-
-// *** -----------------------------------
-// *** 5) Bucle para eliminar cada uno de los nodos de la lista enlazada
-// *** Al finalizar este algoritmo lst queda con valor NULL
-// *** -----------------------------------
-   printf("\n\nELIMINAMOS LA LISTA ENLAZADA\n");
-   
-   aborrar = lst;
-   while (lst != NULL) {
-      lst = lst-> sig;
-      free(aborrar);
-      aborrar = lst;
-   }
-
-
-   printf("\n");
-   system ("pause");
-   return 0;
-
-} /* Fin del main */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// ej pablo 2
-
-include <stdio.h>
-#include <stdlib.h>
-
-// *** ---------------------------
-// *** Definicion del tipo nodo
-// *** ---------------------------
-typedef int tipoInfo;
-
-typedef struct tipoNodo {         
-    tipoInfo info;
-    struct tipoNodo *sig;
-} tipoNodo;
-
-
-
-int main (void) {
-
-// *** -----------------------------------
-// *** 1) Crear una lista enlazada vacía
-// *** ----------------------------------
-
-   tipoNodo *lst;      // Puntero de entrada a la lista enlazada
-
-   tipoNodo *nuevo;    // Punteros auxiliares para los algoritmos
-   tipoNodo *indice;
-   tipoNodo *aborrar;
-   tipoNodo *ultimo;
-
-   tipoInfo num;
-   int cuantos;
-   long suma;
-
-   lst = NULL;         // Iniciamos a "vacía" la lista enlazada
-
-
-// *** -----------------------------------
-// *** 2) Crear un bucle que vaya leyendo números hasta que se teclee 0 o negativo 
-// ***   (bucle controlado por centinela). Por cada número leído debe de crear un nodo
-// ***   y enlazarlo como PRIMERO a la lista enlazada.
-// *** ----------------------------------
-
-   printf("\n\nCREAR LISTA ENLAZANDO NODOS COMO PRIMERO\n");
-   printf("Introduzca numero (<=0 para terminar): ");
-   scanf("%d", &num);
-   while (num >0) {
-      nuevo = (tipoNodo *) malloc(sizeof(tipoNodo));
-      nuevo->info = num;
-      nuevo->sig = NULL;
-
-      nuevo->sig = lst;
-      lst = nuevo;
-
-      printf("Introduzca numero (<=0 para terminar): ");
-      scanf("%d", &num);
-   }
-
-
-// *** -----------------------------------
-// *** 3) Crear un bucle para que recorra la lista, la visualice, 
-// ***    cuente sus nodos y obtenga la suma del valor de todos los nodos
-// ***    Imprimir el número de nodos y su suma en pantalla
-// *** ----------------------------------
-
-   printf("\nLista enlazada:\n");
-
-   cuantos = 0;
-   suma = 0;
-   indice = lst;
-   while (indice != NULL) {
-      printf("%d\n", indice->info);
-      cuantos++;
-      suma = suma + indice->info;
-      indice = indice-> sig;
-   }
-
-   printf("La lista enlazada tiene %d nodos.\n", cuantos);
-   printf("El valor de su suma es %ld.\n", suma);
-
-
-// *** -----------------------------------
-// *** 4) Crear un bucle que vaya leyendo números hasta que se teclee 0 o negativo
-// ***    (bucle controlado por centinela). Por cada número leído debe de crear un nodo y enlazarlo 
-// ***    como ULTIMO a la lista enlazada.
-// *** ----------------------------------
-// *** ----------------------------------------------------
-// --- 4.1 Versión 1 del Algoritmo. Ante cada inserción, siempre recorremos la lista
-// --- desde el principio hasta localizar el ultimo nodo. Es poco eficiente
-// *** ----------------------------------------------------
-   printf("\n\nCREAR LISTA ENLAZANDO NODOS COMO ULTIMO (algoritmo 1)\n");
-   printf("Introduzca numero (<=0 para terminar): ");
-   scanf("%d", &num);
-   while (num >0) {
-
-      nuevo = (tipoNodo *) malloc(sizeof(tipoNodo));
-      nuevo->info = num;
-      nuevo->sig = NULL;
-
-      // Localizamos el ultimo nodo
-      indice = lst;
-      if (indice == NULL)
-        lst = nuevo;
-      else {
-        while (indice->sig != NULL)
-           indice = indice->sig;
-        indice->sig = nuevo;
-      }
-
-      printf("Introduzca numero (<=0 para terminar): ");
-      scanf("%d", &num);
-   }
-
-// *** -----------------------------------
-// *** Bucle para recorrer la lista para visualizarla
-// *** Similar al creado en el punto 3)
-// *** ----------------------------------
-
-   printf("\nLista enlazada:\n");
-
-   indice = lst;
-   while (indice != NULL) {
-      printf("%d\n", indice->info);
-      indice = indice-> sig;
-   }
-
-
-// *** ----------------------------------------------------
-// --- 4.2 Versión 2 del Algoritmo. Recorremos la lista la primera vez para lozalizar el ultimo
-// --- nodo, y a partir de ahí, mantenemos un puntero al ultimo nodo de forma que asi hacemos
-// --- más eficientes las inserciones.
-// *** ----------------------------------------------------
-
-   ultimo = lst;
-   if (lst != NULL)
-    while (ultimo->sig != NULL)
-      ultimo = ultimo -> sig;
-
-   printf("\n\nCREAR LISTA ENLAZANDO NODOS COMO ULTIMO (algoritmo 2)\n");
-   printf("Introduzca numero (<=0 para terminar): ");
-   scanf("%d", &num);
-   while (num > 0) {
-
-      nuevo = (tipoNodo *) malloc(sizeof(tipoNodo));
-      nuevo->info = num;
-      nuevo->sig = NULL;
-
-      // El ultimo nodo está apuntado por ultimo
-      if (lst == NULL) {
-        lst = nuevo;
-        ultimo = nuevo;
-      }
-      else {
-        ultimo->sig = nuevo;
-        ultimo = nuevo;  // Siempre dejamos apuntado el último nodo
-      }
-
-      printf("Introduzca numero (<=0 para terminar): ");
-      scanf("%d", &num);
-   }
-
-
-// *** -----------------------------------
-// *** Bucle para recorrer la lista para visualizarla
-// *** Similar al creado en el punto 3)
-// *** ----------------------------------
-
-   printf("\nLista enlazada:\n");
-
-   indice = lst;
-   while (indice != NULL) {
-      printf("%d\n", indice->info);
-      indice = indice-> sig;
-   }
-
-
-// *** -----------------------------------
-// *** 6) Eliminar el primer nodo de la lista
-// *** -----------------------------------
-
-           ****** COMPLETAR **********
-           ****** COMPLETAR **********
-           ****** COMPLETAR **********
-           ****** COMPLETAR **********
-           ****** COMPLETAR **********
-           ****** COMPLETAR **********
-           ****** COMPLETAR **********
-           ****** COMPLETAR **********
-           ****** COMPLETAR **********
-           ****** COMPLETAR **********
-           ****** COMPLETAR **********
-           ****** COMPLETAR **********
-           ****** COMPLETAR **********
-
-
-// *** -----------------------------------
-// *** Bucle para recorrer la lista para visualizarla
-// *** Similar al creado en el punto 3)
-// *** ----------------------------------
-
-   printf("\nLista enlazada:\n");
-
-   indice = lst;
-   while (indice != NULL) {
-      printf("%d\n", indice->info);
-      indice = indice-> sig;
-   }
-   
-   
-// *** -----------------------------------
-// *** 7) Eliminar el último nodo de la lista
-// *** -----------------------------------
-
-           ****** COMPLETAR **********
-           ****** COMPLETAR **********
-           ****** COMPLETAR **********
-           ****** COMPLETAR **********
-           ****** COMPLETAR **********
-           ****** COMPLETAR **********
-           ****** COMPLETAR **********
-           ****** COMPLETAR **********
-           ****** COMPLETAR **********
-           ****** COMPLETAR **********
-           ****** COMPLETAR **********
-           ****** COMPLETAR **********
-           ****** COMPLETAR **********
-
-
-// *** -----------------------------------
-// *** Bucle para recorrer la lista para visualizarla
-// *** Similar al creado en el punto 3)
-// *** ----------------------------------
-
-   printf("\nLista enlazada:\n");
-
-   indice = lst;
-   while (indice != NULL) {
-      printf("%d\n", indice->info);
-      indice = indice-> sig;
-   }
-   
-   
-// *** -----------------------------------
-// *** 8) Insertar un nodo en orden en una lista enlazada:
-// ***    a) Eliminar la lista enlazada que tengamos construida hasta este momento.
-// ***    b) Crear un bucle que vaya leyendo números hasta que se teclee 0 o negativo
-// ***    (bucle controlado por centinela). Por cada número leído debe de crear un nodo y enlazarlo 
-// ***    en la posición que le correspnda dentro de la lista enlazada. De esta forma, la lista se ira 
-// ***    creando siempre de forma ordenada
-// *** -----------------------------------
-
-           ****** COMPLETAR **********
-           ****** COMPLETAR **********
-           ****** COMPLETAR **********
-           ****** COMPLETAR **********
-           ****** COMPLETAR **********
-           ****** COMPLETAR **********
-           ****** COMPLETAR **********
-           ****** COMPLETAR **********
-           ****** COMPLETAR **********
-           ****** COMPLETAR **********
-           ****** COMPLETAR **********
-           ****** COMPLETAR **********
-           ****** COMPLETAR **********
-
-
-// *** -----------------------------------
-// *** Bucle para recorrer la lista para visualizarla
-// *** Similar al creado en el punto 3)
-// *** ----------------------------------
-
-   printf("\nLista enlazada:\n");
-
-   indice = lst;
-   while (indice != NULL) {
-      printf("%d\n", indice->info);
-      indice = indice-> sig;
-   }
-   
- 
-
-// *** -----------------------------------
-// *** 5) Bucle para eliminar cada uno de los nodos de la lista enlazada
-// *** Al finalizar este algoritmo lst queda con valor NULL
-// *** -----------------------------------
-   printf("\n\nELIMINAMOS LA LISTA ENLAZADA\n");
-
-   aborrar = lst;
-   while (lst != NULL) {
-      lst = lst-> sig;
-      free(aborrar);
-      aborrar = lst;
-   }
-
-
-   printf("\n");
-   system ("pause");
-   return 0;
-
-} /* Fin del main */
-
-
-
-
-
-
-
-
-//res 
+// ej res pablo
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -2816,7 +1641,7 @@ int main (void) {
 	printf("\n");
 
 // *** -----------------------------------
-// *** 9) Bucle para eliminar cada uno de los nodos de la lista enlazada
+// *** 12) Bucle para eliminar cada uno de los nodos de la lista enlazada
 // *** Al finalizar este algoritmo lst queda con valor NULL
 // *** -----------------------------------
 
@@ -2845,6 +1670,654 @@ int main (void) {
 }
 
 
+/*//EJ PRACT 13_________________________________________________________________________________
+
+
+int main (void) {
+
+// *** -----------------------------------
+// *** 1) Crear una lista enlazada vac�a
+// *** ----------------------------------
+
+//CREACION DE NODO
+   nuevo = malloc(sieof(tipoNodo));
+   if(nuevo == NULL)
+   else {
+
+}
 
 
 
+// *** -----------------------------------
+// *** 2) Crear un bucle que vaya leyendo n�meros hasta que se teclee 0 o negativo 
+// ***   (bucle controlado por centinela). Por cada n�mero le�do debe de crear un nodo
+// ***   y enlazarlo como PRIMERO a la lista enlazada.
+// *** ----------------------------------
+
+printf
+while
+
+
+
+
+
+// *** -----------------------------------
+// *** 3) Crear un bucle para que recorra la lista, la visualice, 
+// ***    cuente sus nodos y obtenga la suma del valor de todos los nodos
+// ***    Imprimir el n�mero de nodos y su suma en pantalla
+// *** ----------------------------------
+printf("lista enlazada");
+
+cuantos = 0;
+suma = 0;
+
+indice = lst; //empezar
+while (indice != NULL){
+	//tratamiento del nodo
+printf("%d", indice -> info);
+cuantos ++;
+______
+______
+
+
+
+
+ indice = indice -> sig; //cada vez que quiera avanzar
+}
+// ej lista vacia: sirve porque no hay nada que recorrer, el algoritmo no falla
+
+
+
+// *** -----------------------------------
+// *** 4) Crear un bucle que vaya leyendo n�meros hasta que se teclee 0 o negativo
+// ***    (bucle controlado por centinela). Por cada n�mero le�do debe de crear un nodo y enlazarlo 
+// ***    como ULTIMO a la lista enlazada.
+// *** ----------------------------------
+
+if (lst==NULL) //hacemos este if para que si la lista este vacía, el algoritmo while sea valido
+	lst = nuevo;
+else{
+indice = lst;
+while (indice->sig != NULL) //indice se queda apuntando al ultimo nodo, el puntero de ese nodo va a null, por eso sabemos que es el último
+	indice = indice->sig;
+indice->sig = nuevo; //OBLIGATORIO
+}
+
+// *** ----------------------------------------------------
+// --- 4.1 Versi�n 1 del Algoritmo. Ante cada inserci�n, siempre recorremos la lista
+// --- desde el principio hasta localizar el ultimo nodo. Es poco eficiente
+// *** ----------------------------------------------------
+   
+
+//recorremos una vez hasta encontrar el último nodo, apuntamos con un puntero al último nodo
+ultimo=lst;
+if (lst != NULL){
+ultimo=lst;
+while(ultimo->sig != NULL) //si la lista está vacía: error
+	ultimo = ultimo -> sig
+}
+...
+...
+if (lst==NULL){
+	lst=nuevo;
+	ultimo=nuevo;
+}
+else{
+	ultimo->sig=nuevo;
+	ultimo=nuevo;
+}
+
+// ultimo->sig=nuevo;
+// ultimo=nuevo; //SIEMPRE DEJAMOS APUNTADO EL ÚLTIMO NODO
+
+
+// *** -----------------------------------
+// *** Bucle para recorrer la lista para visualizarla
+// *** Similar al creado en el punto 3)
+// *** ----------------------------------
+
+/*
+
+1) Crear una lista enlazada vacía (definir la variable correspondiente)
+
+2) Crear un bucle que vaya leyendo números hasta que se teclee uno 0 o negativo (bucle controlado por centinela). Por cada número leído debe de crearse un nodo y enlazarlo como primero a la lista enlazada
+
+3) Crear un bucle para que recorra la lista, la visualice, cuente sus nodos y obtenga la suma del valor de todos los nodos
+
+4) Crear un bucle que vaya leyendo números hasta que se teclee uno 0 o negativo (bucle controlado por centinela). Por cada número leído debe de crear un nodo y enlazarlo como ultimo a la lista enlazada. Se deben escribir dos versiones de este algoritmo
+   1.- Ante cada inserción, siempre recorremos la lista desde el principio hasta localizar el último nodo. Es poco eficiente
+   2.- Recorremos la lista la primera vez para localizar el ultimo nodo, y a partir de ahí, mantenemos un puntero al último nodo de forma que así hacemos más eficientes las inserciones
+
+
+
+5) Crear un bucle que elimine todos los nodos de la lista (dejar la lista vacia)
+
+
+//para lista vacía: OK
+aborrar = lst; //apuntar al primer nodo
+while (lst != NULL){
+	lst = lst->sig; //1 apuntar al siguiente
+	free(aborrar); //2 liberar
+	aborrar = lst; //3
+}
+// 1 2 3 o 3 1 2 
+/*
+OTRA OPCIÓN: indice apunta a todos los elementos, aborrar va por detras de el liberando todos los nodos. 
+
+indice = lst;
+whule(indice != NULL){
+	aborrar = indice;
+	indice = indice->sig
+	free(aborrar);
+}
+	lst = NULL; // no se modifica el valor del puntero de la lista, por eso igualamos al final a NULL
+
+
+
+//6) Eliminar el primer nodo de la lista
+
+//también es válido si solo tiene 1 nodo o si está vacia
+
+if (lst != NULL){
+	aborrar = lst;
+	lst = lst->sig;
+	free(aborrar);
+}
+
+//7) Eliminar el ultimo nodo de la lista
+
+if (lst != NULL){
+	ultimo = lst;
+	anterior = NULL;
+while (ultimo->sig != NULL){
+	anterior = ultimo;
+	ultimo = ultimo->sig;
+	}
+if (anterior == NULL) {
+	free (lst);
+	lst = NULL;//resolvemos si solo hay un nodo 
+	} else{
+	free(ultimo);
+	anterior->sig = NULL; // error si solo hay un nodo
+	}
+}
+//ROBUSTEZ (vacia ok), si solo hay uno 
+
+
+
+
+
+
+
+//8) Insertar un nodo en orden en una lista enlazada MAS COMPLEJO: 4 ramas
+
+
+//si la lista está vacía, el nodo que acabo de crear es el primero
+if (lst == NULL) {
+	lst = nuevo;
+}
+
+// en otro caso, recorremos la lista con DOS PUNTEROS, que apunten a los nodos entre los que inserto el nuevo
+else { //lista no vacía
+	indice = lst;
+	anterior = NULL;
+	while ( (indice->info < nuevo->info)&& (indice->sig != NULL)){
+		anterior = int indice;
+		indice = indice->sig;
+	} //hemos encontrado los nodos a los que apuntaremos entre los que metemos el nuevo
+//resolver ERROR 1
+//el nodo se inserta como primero
+	if (anterior == NULL) {
+	nuevo->sig = lst;
+	lst = nuevo;
+}
+//resolver error 2
+else if ((indice->sig==NULL)&&(indice->info < nuevo->info)){
+//el nodo se inserta al final 
+	nuevo->sig = NULL;
+	indice->sig= nuevo;
+}
+
+else { //el nodo se inserta en medio de la lista
+		nuevo->sig= indice; //ERROR 2; (si apunta al último, lo esta apuntando delante, y lo quiero detras)
+		anterior->sig= nuevo; //ERROR 1 (si apunta al primero)
+
+}
+
+
+// FIN
+
+
+9) Eliminar un nodo de la lista por su contenido
+
+10) Devolver la información de un nodo de la lista identificado por su posición
+
+11) Eliminar un nodo de la lista identificado por su posición
+
+12) Insertar un nodo en la lista, en una posición indicada
+
+
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//-------------------------------------------------------------------------------------
+// NAVIA EJEMPLOS DE LISTAS ENLAZADAS: EJ
+ 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+// DEFINIR STRUCT: NODO
+
+struct _agenda {
+	char nombre[20];
+	char telefono[12];
+	struct _agenda *siguiente;
+};
+
+ 
+// MOSTRAR MENU 
+
+
+void mostrar_menu()
+ {
+	fflush(stdout);
+	printf("\n\nMenu:\n=====\n\n");
+	printf("1.- ANadir elementos\n");
+	printf("2.- Borrar elementos\n");
+	printf("3.- Mostrar lista\n");
+	printf("4.- Salir\n\n");
+	printf("Escoge una opcion: ");
+}
+/* Con esta funcion se anade un elemento al final de la lista */
+void anadir_elemento(struct _agenda **primero)
+ {
+	struct _agenda *nuevo, *ant, *aux=*primero;
+	/* Se reserva memoria para el nuevo elemento */
+	nuevo = (struct _agenda *) malloc (sizeof(struct _agenda));
+	if (nuevo==NULL)
+	{
+		printf( "No hay memoria disponible!\n");
+		exit(0);
+
+	}
+	
+ 	printf("\nNombre a incluir: ");
+	scanf("%s%*c",nuevo->nombre);
+	printf("\nTelefono: ");
+	scanf("%s",nuevo->telefono);
+	
+       /* Ahora se introduce el nuevo elemento en la lista.
+	Se situa al final de la lista */
+	if (*primero==NULL) {
+		printf( "Primer elemento\n");
+		*primero = nuevo;
+        nuevo->siguiente=NULL;
+	}
+      else
+        { 
+         if ((strcmp(nuevo->nombre, aux->nombre))<0) 
+          {
+            nuevo->siguiente=*primero;
+            *primero=nuevo;
+          }
+         else
+          {
+           ant=NULL;
+           while(aux!=NULL && strcmp(nuevo->nombre, aux->nombre)>0)  
+           {
+             ant=aux;
+             aux=aux->siguiente;
+           }
+           if (aux==NULL)
+           {
+              ant->siguiente=nuevo;
+              nuevo->siguiente=NULL;
+          }
+          else
+          {
+              nuevo->siguiente=aux;
+              ant->siguiente=nuevo;
+          }
+         }
+    }
+}
+
+// ELIMINAR LISTA
+
+void eliminar_lista(struct _agenda **primero, char *nombre) 
+{
+
+     struct _agenda *auxiliar, *ant=NULL; /* Para recorrer la lista */
+	 int lon=20;	 
+	 nombre=(char *)malloc(lon *sizeof(char));
+ 	 printf("\nNombre a eliminar: ");
+	 scanf("%s",nombre);
+	 getchar();
+ 	for (auxiliar=*primero;auxiliar!=NULL && (strcmp(auxiliar->nombre, nombre)!=0);ant= auxiliar,auxiliar = auxiliar->siguiente);
+	{
+		if(!strcmp(auxiliar->nombre, nombre)==0)
+	    {
+         printf("\nNo se encontro ");
+         }
+         else
+         {
+             printf("\n Encontro el nombre");
+             if(ant==NULL)
+             { 
+		       if (auxiliar->siguiente == NULL)
+		       {
+                *primero=NULL; /*es el primero y el unico*/
+                free(ant);
+                }   
+	           else
+		       {
+		        auxiliar = auxiliar->siguiente;/*es el primero*/
+                *primero=auxiliar;
+                free(ant);
+                }
+             }   
+	    	else
+		    {
+		      if (auxiliar->siguiente == NULL)
+		      {
+			  /*Es el ultimo*/
+			  ant->siguiente=NULL;
+			  free(auxiliar);
+			 }
+	         else 
+		    {
+		     ant->siguiente=auxiliar->siguiente;
+		     free(auxiliar);
+		     		 }
+     }
+	}
+  }
+
+}
+
+
+// MOSTRAR LISTA
+ 
+void mostrar_lista(struct _agenda *primero) 
+{
+	struct _agenda *auxiliar; /* Para recorrer la lista */
+	int i;
+	i=0;
+	auxiliar = primero;
+ 	printf("\nMostrando la lista completa:\n");
+	while (auxiliar!=NULL)
+	{
+		printf("Nombre: %s, Telefono: %s\n",
+		auxiliar->nombre, auxiliar->telefono);
+		auxiliar = auxiliar->siguiente;
+		i++;
+	}
+if (i==0) printf( "\nLa lista esta  vacia!!\n" );
+}
+int main()
+{
+ 
+  struct _agenda *primero = NULL;
+  struct _agenda *ultimo = NULL;
+
+  char opcion;
+  char *nombre="";
+  do 
+  {
+    fflush(stdout);
+    mostrar_menu();
+    fflush(stdin);
+    opcion = getchar();
+    switch ( opcion )
+	{
+      case '1':
+           {
+            anadir_elemento(&primero);
+	         break;
+          }
+      case '2':{
+            eliminar_lista(&primero,nombre) ;
+	        break;
+         }
+      case '3': {
+               mostrar_lista(primero);
+	           break;
+            }
+      case '4': exit( 1 );
+      default:{
+                printf( "Opcion no valida\n" );
+	            break;
+             }
+}
+} while (opcion!='4');
+}
+
+
+
+
+
+
+
+
+
+
+//------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//FICHEROS JAVI
+
+#include <stdio.h>
+#include <stdlib.h>
+
+	typedef struct Nodo
+	{
+	int info;
+	struct Nodo *sig;
+	}tipoNodo;
+	
+	
+	int guardarListaenTexto(tipoNodo *lista, char *nombreFichero)
+	{
+		FILE *fp;
+		tipoNodo *aux;
+		int contador;
+		
+		if(lista==NULL)
+			return -1;
+		
+		fp=fopen(nombreFichero, "w");
+		
+		if(fp==NULL)
+			return -1;
+			
+		aux=lista;
+		contador=0;
+		
+		while(aux!=NULL)
+		{
+			fprintf(fp, "%d ", aux->info);
+			aux=aux->sig;
+			contador++;
+				
+		}
+		
+		
+		fclose(fp);
+		return contador;
+	}
+	
+	int cargarListadeTexto(tipoNodo **raiz, char *nombreFichero)
+	{
+		FILE *fp;
+		tipoNodo *nuevo;
+		tipoNodo *aux;
+		int num;
+		
+		if(raiz == NULL)
+			return -1;
+			
+		fp=fopen(nombreFichero, "r");
+		if(fp==NULL)
+			return -1;
+			
+		while(fscanf(fp,"%d",&num)!=EOF)
+		{
+			
+			nuevo = malloc(sizeof(tipoNodo));
+			if(nuevo==NULL)
+				return -2;
+			nuevo->sig = NULL;	
+			nuevo->info=num;
+			
+			if(*raiz==NULL)
+			{
+				*raiz=nuevo;	
+			}
+			else
+			{
+				aux=*raiz;
+				while(aux->sig!=NULL)
+				{
+					aux=aux->sig;
+				}
+				aux->sig=nuevo;
+			}
+			
+
+			
+		}
+			
+		fclose(fp);
+		
+		return 0;
+	}
+	
