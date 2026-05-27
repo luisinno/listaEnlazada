@@ -49,11 +49,14 @@ int eliminarNodoPosicionIndice(ListaEnlazadaRef raiz, int indice);
 
 
 
-/* Funciones dependientes del tipo definido como tipoInfo */
+/* DANI Funciones dependientes del tipo definido como tipoInfo */
 
 tipoInfo devolverInfoPosicionIndice(ListaEnlazada raiz, int indice);
 int mostrarListaEnlazada(ListaEnlazada raiz);
 int crearListaValoresAleatorios(ListaEnlazadaRef raiz, int numNodos);
 int insertarOrdenada(ListaEnlazadaRef raiz, tipoInfoRef info);
+
+/*PABLO*/
+
 
 #endif
