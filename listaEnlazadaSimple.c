@@ -2533,3 +2533,138 @@ int main()
 
 //------------------------------------------------------------------------------------------------------------------------------------------
 
+//EJERCICIO 15
+
+int guardarListaEnlazadaTexto(ListaEnlazada raiz, char *nombreFichero)
+{
+	tipoNodoRef aux;
+	int contador,i,total_car;
+	FILE *f;
+
+	if(NULL==(f=fopen(nombreFichero, "w")))
+	return -1;
+
+	if(raiz==NULL)
+	{
+		fclose(f);
+		return -1;
+	}
+	
+	aux=raiz;
+	total_car=contador=0;
+	while(aux!=NULL)
+	{
+		if(aux->sig==NULL)
+		{
+			contador=fprintf(f,"%d",aux->info);
+		}
+		else
+		{
+			contador=fprintf(f,"%d\t",aux->info);
+		}
+		
+		if(contador<0)
+		{
+			fclose(f);
+			return -1;
+		}
+		total_car+=contador;
+		aux=aux->sig;
+	}
+
+	fclose(f);
+	return total_car;
+	
+}
+
+int cargarListaEnlazadaTexto(ListaEnlazadaRef raiz, char *nombreFichero)
+{
+    tipoNodoRef aux, nuevo, ant;
+    int valido, total_nodos, dato, flag, flag2;
+    FILE *f;
+
+    // 1. Abrimos archivo (sin exigir que *raiz sea NULL)
+    if (NULL == (f = fopen(nombreFichero, "r")))
+    {
+        *raiz = NULL;
+        return -1;
+    }
+    
+    *raiz = NULL; // Inicializamos la lista vacía para cargar los datos
+    flag = 1;
+    total_nodos = 0;
+
+    // El bucle se controla exclusivamente por la variable 'flag'
+    while (flag == 1)
+    {
+        valido = fscanf(f, "%d", &dato);
+        
+        if (valido == EOF) 
+        {
+            flag = 0; // FIN DE ARCHIVO: Apagamos el flag para que el bucle termine limpiamente
+        }
+        else if (valido <= 0) 
+        {
+            flag = -1; // ERROR DE LECTURA: Usamos un valor especial para detectar el fallo fuera
+        }
+        else 
+        {
+            // LECTURA CORRECTA: Intentamos reservar memoria para el nodo
+            if (NULL == (nuevo = malloc(sizeof(tipoNodo)))) 
+            {
+                flag = -2; // ERROR DE MEMORIA: Apagamos el bucle
+            }
+            else 
+            {
+                total_nodos++;
+                nuevo->sig = NULL;
+                nuevo->info = dato;
+
+                // LOGICA DE INSERCIÓN ORDENADA
+                if (*raiz == NULL) 
+                {
+                    *raiz = nuevo;
+                }
+                else
+				{
+					aux = *raiz;
+					ant = NULL;
+
+					// 1. Buscamos el sitio usando el propio aux para avanzar
+					while (aux != NULL && aux->info < nuevo->info) 
+					{
+						ant = aux;
+						aux = aux->sig;
+					}
+
+					// 2. Una vez salimos del bucle, insertamos según dónde haya quedado aux
+					if (ant == NULL) 
+					{
+						// Si ant sigue siendo NULL, significa que el nuevo número es el menor de todos
+						// y el bucle while de arriba ni siquiera llegó a dar una vuelta.
+						nuevo->sig = *raiz;
+						*raiz = nuevo;
+					}
+					else 
+					{
+						// Si ant NO es NULL, se inserta en medio o al final de la lista (da igual si aux es NULL o no)
+						nuevo->sig = aux;
+						ant->sig = nuevo;
+					}
+				}
+            }
+        }
+    }
+
+    // Cerramos el archivo siempre antes de salir
+    fclose(f);
+
+    // Evaluamos cómo terminó el bucle según el valor de 'flag'
+    if (flag == 0) {
+        return total_nodos; // Todo fue bien
+    } else if (flag == -1) {
+        return -2; // Error de lectura (ej. una letra en el archivo)
+    } else {
+        return total_nodos; // Error de memoria (devolvemos lo que se pudo salvar)
+    }
+}
