@@ -2667,4 +2667,214 @@ int cargarListaEnlazadaTexto(ListaEnlazadaRef raiz, char *nombreFichero)
     } else {
         return total_nodos; // Error de memoria (devolvemos lo que se pudo salvar)
     }
+}#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+typedef struct tipoInfo {
+    char palabra[20];
+    int fil, col, numCar;
+} tipoInfo;
+
+typedef struct tipoNodo {
+    tipoInfo info;
+    struct tipoNodo *sig;
+} tipoNodo;
+
+typedef tipoNodo *ListaEnlazada;         // Puntero a tipoNodo
+typedef ListaEnlazada *ListaEnlazadaRef; // Puntero a puntero a tipoNodo
+
+typedef struct {
+    char **m;
+    int numFil, numCol;
+} matChar;
+
+matChar *generarSopaLetras(ListaEnlazada *raiz, int nFil, int nCol, int *codError) {
+    int i, j;
+
+    // Si la lista esta vacia, se devuelve error
+    if (*raiz == NULL) {
+        *codError = -1;
+        return NULL;
+    }
+
+    // Reserva dinamica de la matriz de palabras
+    matChar *palabras = malloc(sizeof(matChar));
+    if (palabras == NULL) {
+        *codError = -2;
+        return NULL;
+    }
+
+    palabras->m = malloc(nFil * sizeof(char*));
+    if (palabras->m == NULL) {
+        free(palabras);
+        *codError = -3;
+        return NULL;
+    }
+
+    for (i = 0; i < nFil; i++) {
+        palabras->m[i] = malloc(nCol * sizeof(char));
+        if (palabras->m[i] == NULL) {
+            // Rollback en caso de fallo
+            for (j = i - 1; j >= 0; j--) {
+                free(palabras->m[j]);
+            }
+            free(palabras->m);
+            free(palabras);
+            *codError = -4;
+            return NULL;
+        }
+    }
+
+    // Asignar nfil y ncol
+    palabras->numFil = nFil;
+    palabras->numCol = nCol;
+
+    // Llenar la matriz con asteriscos
+    for (i = 0; i < nFil; i++) {
+        for (j = 0; j < nCol; j++) {
+            palabras->m[i][j] = '*';
+        }
+    }
+
+    // Colocar las palabras en la sopa con las condiciones
+    ListaEnlazada actual = *raiz;
+    ListaEnlazada anterior = NULL;
+
+    while (actual != NULL) {
+        if (actual->info.col < nCol && (actual->info.fil + actual->info.numCar) <= nFil) {
+            // La palabra cabe, se inserta verticalmente
+            for (i = 0; i < actual->info.numCar; i++) {
+                palabras->m[actual->info.fil + i][actual->info.col] = actual->info.palabra[i];
+            }
+            anterior = actual;
+            actual = actual->sig;
+        } else {
+            // La palabra NO cabe, se extrae el nodo y se borra
+            ListaEnlazada aBorrar = actual;
+            if (anterior == NULL) {
+                *raiz = (*raiz)->sig;
+            } else {
+                anterior->sig = actual->sig;
+            }
+            actual = actual->sig;
+            free(aBorrar);
+        }
+    }
+
+    // Rellenar huecos vacíos con letras aleatorias
+    for (i = 0; i < nFil; i++) {
+        for (j = 0; j < nCol; j++) {
+            if (palabras->m[i][j] == '*') {
+                palabras->m[i][j] = 'A' + rand() % 26;
+            }
+        }
+    }
+
+    *codError = 0;
+    return palabras;
+}
+
+int escribirListaEnFichero(ListaEnlazada lista, char *nombreFichero) {
+    ListaEnlazada actual = lista;
+    FILE *fp;
+    int cont = 0;
+
+    fp = fopen(nombreFichero, "w");
+    if (fp == NULL) {
+        printf("ERROR. No se pudo abrir el fichero.\n");
+        return -1;
+    } else {
+        while (actual != NULL) {
+            fprintf(fp, "%-19s (%4d , %4d) %4d\n",
+                    actual->info.palabra,
+                    actual->info.fil,
+                    actual->info.col,
+                    actual->info.numCar);
+            cont++;
+            actual = actual->sig;
+        }
+        fclose(fp);
+        return cont;
+    }
+}
+
+int main(void) {
+    ListaEnlazada raiz = NULL;
+    matChar *sopa;
+    int numFilas = 10, numCols = 10;
+    int error;
+
+    // -------------------------------
+    // Crear algunos nodos de ejemplo en el Heap
+    // -------------------------------
+    
+    // Nodo 1
+    ListaEnlazada nodo1 = malloc(sizeof(tipoNodo));
+    strcpy(nodo1->info.palabra, "CARTA");
+    nodo1->info.fil = 2;
+    nodo1->info.col = 1;
+    nodo1->info.numCar = strlen(nodo1->info.palabra);
+    nodo1->sig = NULL;
+    raiz = nodo1;
+
+    // Nodo 2
+    ListaEnlazada nodo2 = malloc(sizeof(tipoNodo));
+    strcpy(nodo2->info.palabra, "LUNA");
+    nodo2->info.fil = 0;
+    nodo2->info.col = 3;
+    nodo2->info.numCar = strlen(nodo2->info.palabra);
+    nodo2->sig = NULL;
+    nodo1->sig = nodo2;
+
+    // -------------------------------
+    // Generar sopa de letras
+    // -------------------------------
+    sopa = generarSopaLetras(&raiz, numFilas, numCols, &error);
+    
+    if (error != 0) {
+        printf("Error al generar sopa de letras (código %d)\n", error);
+        return 1;
+    }
+
+    // Mostrar la sopa por pantalla
+    printf("\nSopa de letras generada:\n\n");
+    for (int i = 0; i < sopa->numFil; i++) {
+        for (int j = 0; j < sopa->numCol; j++) {
+            printf("%c ", sopa->m[i][j]);
+        }
+        printf("\n");
+    }
+    printf("\n\n");
+
+    // -------------------------------
+    // Guardar lista en fichero
+    // -------------------------------
+    int numEscritos = escribirListaEnFichero(raiz, "palabras.txt");
+    if (numEscritos == -1) {
+        printf("No se pudo escribir el archivo.\n");
+    } else {
+        printf("Se escribieron %d palabras en el archivo.\n", numEscritos);
+    }
+    printf("\n");
+
+    // -------------------------------
+    // Liberar memoria (Evitar Fugas)
+    // -------------------------------
+    
+    // 1. Liberar Matriz
+    for (int i = 0; i < sopa->numFil; i++) {
+        free(sopa->m[i]);
+    }
+    free(sopa->m);
+    free(sopa);
+
+    // 2. Liberar Lista Enlazada
+    while (raiz != NULL) {
+        ListaEnlazada tmp = raiz;
+        raiz = raiz->sig;
+        free(tmp);
+    }
+
+    return 0;
 }
